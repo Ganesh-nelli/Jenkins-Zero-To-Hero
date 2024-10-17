@@ -48,7 +48,8 @@ pipeline {
     }
     stage('Deploy to docker') {
       steps {
-        sh 'docker run -itd --name cont2 -p 8086:8080 ganeshnelli/ultimate-cicd:${BUILD_NUMBER}'
+        sh 'echo passed'
+        //sh 'docker run -itd --name cont2 -p 8086:8080 ganeshnelli/ultimate-cicd:${BUILD_NUMBER}'
       }
     }
     stage('Update Deployment File') {

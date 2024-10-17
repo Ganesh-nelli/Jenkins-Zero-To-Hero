@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://44.212.69.84:9000/"
+        SONAR_URL = "http://44.212.64.191:9000/"
       }
       steps {
         withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -47,7 +47,7 @@ pipeline {
     }
     stage('Deploy to docker') {
       steps {
-        sh 'docker run -itd --name cont2 -p 8086:8080 ganeshnelli/ultimate-cicd:4'
+        sh 'docker run -itd --name cont2 -p 8086:8080 ganeshnelli/ultimate-cicd:${BUILD_NUMBER}'
       }
     }
     stage('Update Deployment File') {

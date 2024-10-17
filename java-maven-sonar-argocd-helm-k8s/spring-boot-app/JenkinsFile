@@ -53,23 +53,53 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "Ganesh-nelli"
-        }
-        steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
-                    git config user.email "iamganesh.nelli@gmail.com"
-                    git config user.name "Ganesh-nelli"
-                    BUILD_NUMBER=${BUILD_NUMBER}
+    environment {
+        GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
+        GIT_USER_NAME = "Ganesh-nelli"
+    }
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            sh '''
+                # Set Git config
+                git config user.email "iamganesh.nelli@gmail.com"
+                git config user.name "Ganesh-nelli"
+                echo "Build number: ${BUILD_NUMBER}"
+
+                # Check if the file exists
+                if [ ! -f java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml ]; then
+                    echo "File not found!"
+                    exit 1
+                fi
+                
+                # Print before modification
+                echo "Before modification:"
+                cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+
+                # Replace the image tag in the deployment file (Handle different OS for sed)
+                if [[ "$OSTYPE" == "darwin"* ]]; then
+                    sed -i '' "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                else
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git diff --exit-code || git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
-            }
+                fi
+
+                # Print after modification
+                echo "After modification:"
+                cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+
+                # Stage the file if there are changes
+                git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+
+                # Check for changes
+                git status
+
+                # Commit only if there are changes
+                git diff --exit-code || git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+
+                # Push the changes to GitHub
+                git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+            '''
         }
     }
-  }
+}
+}
 }

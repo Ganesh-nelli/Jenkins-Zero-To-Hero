@@ -45,6 +45,11 @@ pipeline {
         }
       }
     }
+    stage('Deploy to docker') {
+      steps {
+        sh 'docker run -itd --name cont1 -p 8085:8080 ganeshnelli/ultimate-cicd'
+      }
+    }
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"

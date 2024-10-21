@@ -60,7 +60,7 @@ pipeline {
                     echo "Before modification: "
                     cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    sed -i "s|ganeshnelli/ultimate-cicd:[^ ]*|ganeshnelli/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     echo "After modification: "
                     cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git diff java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml

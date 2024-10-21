@@ -64,9 +64,7 @@ pipeline {
                     sed -i "s|ganeshnelli/ultimate-cicd:[^ ]*|ganeshnelli/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     echo "After modification: "
                     cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git diff java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git status
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''

@@ -55,10 +55,16 @@ pipeline {
                 sh '''
                     git checkout main
                     git clean -fd  # Remove untracked files and directories
+                    git pull origin main
                     git config user.email "iamganesh.nelli@gmail.com"
                     git config user.name "Ganesh-nelli"
+                    echo "Before modification: "
+                    cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    sed -i "s|ganeshnelli/ultimate-cicd:[^ ]*|ganeshnelli/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    echo "After modification: "
+                    cat java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    git diff java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git status
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"

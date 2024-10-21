@@ -5,19 +5,6 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
-  environment {
-    // Email notification environment variables
-    EMAIL_RECIPIENT = 'ganeshnelli2205@example.com'  
-    EMAIL_SUBJECT_SUCCESS = "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-    EMAIL_BODY_SUCCESS = "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} has successfully completed.\nCheck console output for details: ${env.BUILD_URL}"
-
-    EMAIL_SUBJECT_FAILURE = "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-    EMAIL_BODY_FAILURE = "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} has failed.\nCheck console output for details: ${env.BUILD_URL}"
-
-    EMAIL_SUBJECT_UNSTABLE = "Build Unstable: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-    EMAIL_BODY_UNSTABLE = "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} is unstable.\nCheck console output for details: ${env.BUILD_URL}"
-  }
-
   stages {
     stage('Checkout') {
       steps {
@@ -83,23 +70,6 @@ pipeline {
                 '''
             }
         }
-    }
-  }
-post {
-    success {
-      mail to: "${EMAIL_RECIPIENT}",
-           subject: "${EMAIL_SUBJECT_SUCCESS}",
-           body: "${EMAIL_BODY_SUCCESS}"
-    }
-    failure {
-      mail to: "${EMAIL_RECIPIENT}",
-           subject: "${EMAIL_SUBJECT_FAILURE}",
-           body: "${EMAIL_BODY_FAILURE}"
-    }
-    unstable {
-      mail to: "${EMAIL_RECIPIENT}",
-           subject: "${EMAIL_SUBJECT_UNSTABLE}",
-           body: "${EMAIL_BODY_UNSTABLE}"
     }
   }
 }

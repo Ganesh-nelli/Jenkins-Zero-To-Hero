@@ -53,6 +53,7 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
+                    git clean -fd  # Remove untracked files and directories
                     git config user.email "iamganesh.nelli@gmail.com"
                     git config user.name "Ganesh-nelli"
                     BUILD_NUMBER=${BUILD_NUMBER}

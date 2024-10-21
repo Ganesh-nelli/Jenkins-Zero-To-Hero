@@ -2,7 +2,6 @@ pipeline {
   agent { 
       label 'dev'
 }
-
   stages {
     stage('Build') {
             agent {
@@ -78,5 +77,4 @@ pipeline {
             }
         }
     }
-}
 }

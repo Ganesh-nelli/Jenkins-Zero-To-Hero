@@ -53,6 +53,7 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
+                    git checkout main
                     git clean -fd  # Remove untracked files and directories
                     git config user.email "iamganesh.nelli@gmail.com"
                     git config user.name "Ganesh-nelli"
@@ -60,7 +61,6 @@ pipeline {
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git status
-                    git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''

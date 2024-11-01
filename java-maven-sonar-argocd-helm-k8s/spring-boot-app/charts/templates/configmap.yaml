@@ -1,11 +1,11 @@
 ---
 apiVersion: v1
 kind: ConfigMap
-[2;2R[3;3R[>0;136;0cmetadata:
+metadata:
   name: {{ include "myssltest.fullname" . }}
   labels:
     {{- include "myssltest.labels" . | nindent 4 }}
-data:
-   EMSCSenderQ: {{ .Values.EMSCSenderQ  | quote }}
-   EMSCTruststorePassword:  {{ .Values.EMSCTruststorePassword  | quote }}
-   EMSCTrustStore: {{ .Values.EMSCTrustStore  | quote }}
+#data:
+ #  EMSCSenderQ: {{ .Values.EMSCSenderQ  | quote }}
+  # EMSCTruststorePassword:  {{ .Values.EMSCTruststorePassword  | quote }}
+   #EMSCTrustStore: {{ .Values.EMSCTrustStore  | quote }}

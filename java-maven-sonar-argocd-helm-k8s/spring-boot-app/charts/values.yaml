@@ -7,7 +7,7 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: ln032pnxrepo01.swc/tibcoesb/baseimage/tibcobwce
+  repository: ganeshnelli/ultimate-cicd:1
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -123,8 +123,8 @@ volumeMounts:
     name: bwce-secret-volume
     readOnly: true 
 
-nodeSelector: 
-  application: tibcoesb-bwce
+#nodeSelector: 
+  #application: tibcoesb-bwce
 
 tolerations: []
 

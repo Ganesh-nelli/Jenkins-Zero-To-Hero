@@ -17,7 +17,7 @@ service:
   annotations: {}
 
 volumeMounts:
-  - name: your-volume-name
+  - name: vol-1
     mountPath: /ganesh/vol  # Specify the path inside the container where the volume should be mounted
 
 volumes:

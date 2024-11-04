@@ -13,7 +13,7 @@ service:
   name: service-1
   type: NodePort 
   port: 80
-  targetPort: 80
+  targetPort: 8080
   annotations: {}
 
 volumeMounts:

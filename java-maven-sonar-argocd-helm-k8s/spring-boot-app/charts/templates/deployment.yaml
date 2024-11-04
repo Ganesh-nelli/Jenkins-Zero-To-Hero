@@ -17,12 +17,13 @@ spec:
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-            - name: vol-1
-              mountPath: {{ .Values.volumeMounts[0].mountPath }}  # Using the path from values.yml
-          env:  # Optional: add any environment variables you may need
+            - name: {{ index .Values.volumeMounts 0 "name" }}  # Correctly index into the list
+              mountPath: {{ index .Values.volumeMounts 0 "mountPath" }}  # Correctly index into the list
+          env:
             - name: dev
               value: "dev-value"
       volumes:
-        - name: vol-1
+        - name: {{ index .Values.volumes 0 "name" }}  # Correctly index into the list
           persistentVolumeClaim:
-            claimName: {{ .Values.volumes[0].persistentVolumeClaim.claimName }}  # PVC name from values.yml
+            claimName: {{ index .Values.volumes 0 "persistentVolumeClaim" "claimName" }}  # Correctly index into the list
+

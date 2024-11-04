@@ -4,26 +4,32 @@ autoscaling:
   enabled: false
 
 image:
-  repository: ganeshnelli/ultimate-cicd:1
-  tag: latest
+  repository: ganeshnelli/ultimate-cicd
+  tag: 1 
   pullPolicy: IfNotPresent
 
 service:
   enabled: true
   name: service-1
-  type: ClusterIP
+  type: NodePort 
   port: 80
   targetPort: 80
   annotations: {}
 
 volumeMounts:
   - name: vol-1
-    mountPath: /ganesh/vol  # Specify the path inside the container where the volume should be mounted
+    mountPath: /ganesh/vol
 
 volumes:
   - name: vol-1
     persistentVolumeClaim:
-      claimName: pvc1  # Replace with your actual PVC name
-    # If you want to use emptyDir, you can use:
-    # emptyDir: {}
+      claimName: pvc1
+
+ingress:
+  enabled: false  # Change to true to enable
+  hosts:
+    - host: chart-example.local
+      paths:
+        - /
+  tls: []
 

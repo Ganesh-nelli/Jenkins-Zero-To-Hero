@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv
+  labels:
+    app: myapp
+    storage: local
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: myapp
+    meta.helm.sh/release-namespace: myapp-namespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: kops-csi-1-21
+  hostPath:
+    path: /mnt/data/myapp-pv
+

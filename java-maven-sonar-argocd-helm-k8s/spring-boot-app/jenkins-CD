@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBE_CONFIG = credentials('kubeconfig') // replace with your credential ID
+    }
+
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout') {
+            steps {
+                // Checkout your code from the main branch
+                git branch: 'main', url: 'https://github.com/Ganesh-nelli/Jenkins-Zero-To-Hero.git'
+                sh 'ls -la'
+            }
+        }
+        stage('Navigate to App Directory') {
+            steps {
+                // Change directory to where the charts are located
+                dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app/charts') {
+                    sh 'ls -l' // List files to confirm we are in the right directory
+                }
+            }
+        }
+        stage('Validate') {
+            steps {
+                dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app/charts') {
+                    sh 'ls -l' // Ensure we can see the charts
+                }
+            }
+        }
+        stage('Run Helm') {
+            steps {
+                script {
+                    def version = '' // Declare version variable at a higher scope
+                    dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app/charts') {
+                        sh 'ls -l' // Debugging to see files in the charts directory
+                        version = sh(script: "sed -n 's/^version: //p' Chart.yaml", returnStdout: true).trim() // Assign value to version
+                        echo "Chart Version: ${version}"
+
+                        // Package the Helm chart
+                        sh "helm package . --version ${version}-main --destination ../packaged"
+                        sh "ls -la ../packaged" // List the packaged files
+                    }
+                    //currentBuild.displayName = version // Optionally set the display name for better tracking
+                    env.VERSION = version // Store the version in the environment variable
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    withKubeConfig(caCertificate: '', clusterName: 'mycluster.k8s.local', contextName: '', credentialsId: 'kubeconfig', namespace: 'myapp-namespace', restrictKubeConfigAccess: false, serverUrl: 'https://api-mycluster-k8s-local-9s4spt-1192141345.us-east-2.elb.amazonaws.com') {
+                        dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app/charts') {
+                            // Use the version from the environment variable
+                            sh "helm upgrade --install myapp ../packaged/myapp-${env.VERSION}-main.tgz --namespace myapp-namespace"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

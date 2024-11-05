@@ -75,8 +75,8 @@ pipeline {
   post {
   always {
       script {
-          def jobName = env.JOB NAME
-          def buildNumber = env.BUILD NUMBER
+          def jobName = env.JOB_NAME
+          def buildNumber = env.BUILD_NUMBER
           def pipelineStatus = currentBuild.result?: 'UNKNOWN'
           def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green': 'red'
                 

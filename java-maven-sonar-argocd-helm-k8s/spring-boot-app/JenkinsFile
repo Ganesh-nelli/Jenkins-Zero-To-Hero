@@ -87,7 +87,7 @@ pipeline {
               <h2>${jobName} - Build ${buildNumber}</h2>
               <div style="background-color: ${bannerColor}; padding: 10px;">
               </div>
-              <h3 style="color: white;">Pipeline Status: ${pipelineStatus.toUpperCase()}</h3> 
+              <h3 style="color: black;">Pipeline Status: ${pipelineStatus.toUpperCase()}</h3> 
               <p>Check the <a href="${BUILD_URL}">console output</a>.</p>
               </div>
               </body>

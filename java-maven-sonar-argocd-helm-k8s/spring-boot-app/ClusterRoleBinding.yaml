@@ -5,8 +5,8 @@ metadata:
   namespace: myapp-namespace 
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: rbac.authorization.k8s.io
-  name: ClusterRole 
+  kind: ClusterRole
+  name: jenkins-pv-access 
 subjects:
 - namespace: myapp-namespace 
   kind: ServiceAccount

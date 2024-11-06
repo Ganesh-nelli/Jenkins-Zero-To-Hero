@@ -5,6 +5,10 @@ metadata:
   namespace: myapp-namespace
   labels:
     app: myapp
+  annotations:
+    meta.helm.sh/release-name: myapp
+    meta.helm.sh/release-namespace: myapp-namespace
+    app.kubernetes.io/managed-by: Helm
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,4 +16,3 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: kops-csi-1-21
-

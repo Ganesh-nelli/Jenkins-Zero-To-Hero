@@ -5,10 +5,10 @@ metadata:
   namespace: myapp-namespace
   labels:
     app: myapp
+    app.kubernetes.io/managed-by: Helm
   annotations:
     meta.helm.sh/release-name: myapp
     meta.helm.sh/release-namespace: myapp-namespace
-    app.kubernetes.io/managed-by: Helm
 spec:
   accessModes:
     - ReadWriteOnce

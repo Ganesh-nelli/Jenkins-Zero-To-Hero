@@ -5,8 +5,8 @@ metadata:
   namespace: myapp-namespace 
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: app-role 
+  kind: rbac.authorization.k8s.io
+  name: ClusterRole 
 subjects:
 - namespace: myapp-namespace 
   kind: ServiceAccount

@@ -13,10 +13,10 @@ spec:
         app: {{ .Release.Name }}-app
     spec:
       containers:
-        - name: spring-boot-app
+        - name: spring-boot-app1
           image: {{ .Values.image1.repository }}:{{ .Values.image1.tag }}
           imagePullPolicy: {{ .Values.image1.pullPolicy }}
-        - name: spring-boot-app
+        - name: spring-boot-app2
           image: {{ .Values.image2.repository }}:{{ .Values.image2.tag }}
           imagePullPolicy: {{ .Values.image2.pullPolicy }}
           volumeMounts:

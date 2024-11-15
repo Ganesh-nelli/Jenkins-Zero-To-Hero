@@ -3,15 +3,19 @@ replicaCount: 1
 autoscaling:
   enabled: false
 
-image:
+image1:
   repository: ganeshnelli/ultimate-cicd
   tag: 1 
+  pullPolicy: IfNotPresent
+image2:
+  repository: ganeshnelli/test
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
   enabled: true
   name: service-1
-  type: NodePort 
+  type: ClusterIP 
   port: 80
   targetPort: 8080
   annotations: {}

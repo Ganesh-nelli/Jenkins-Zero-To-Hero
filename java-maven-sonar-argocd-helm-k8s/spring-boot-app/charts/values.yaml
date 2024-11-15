@@ -7,10 +7,6 @@ image1:
   repository: ganeshnelli/ultimate-cicd
   tag: 1 
   pullPolicy: IfNotPresent
-image2:
-  repository: ganeshnelli/test
-  tag: latest
-  pullPolicy: IfNotPresent
 
 service:
   enabled: true
@@ -30,7 +26,7 @@ volumes:
       claimName: pvc1
 
 ingress:
-  enabled: true  # Change to true to enable
+  enabled: false  # Change to true to enable
   hosts:
     - host: chart-example.local
       paths:

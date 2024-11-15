@@ -30,7 +30,7 @@ volumes:
       claimName: pvc1
 
 ingress:
-  enabled: false  # Change to true to enable
+  enabled: true  # Change to true to enable
   hosts:
     - host: chart-example.local
       paths:

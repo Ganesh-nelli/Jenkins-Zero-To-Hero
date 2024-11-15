@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-app
-          image: {{ .Values.image.repository }}:{{ .Values.image1.tag }}
+          image: {{ .Values.image1.repository }}:{{ .Values.image1.tag }}
           imagePullPolicy: {{ .Values.image1.pullPolicy }}
           volumeMounts:
             - name: {{ index .Values.volumeMounts 0 "name" }}  # Correctly index into the list

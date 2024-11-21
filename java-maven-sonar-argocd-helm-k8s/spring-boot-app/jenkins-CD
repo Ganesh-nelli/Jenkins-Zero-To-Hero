@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any  // agent { label 'dev' }
 
     environment {
         KUBE_CONFIG = credentials('kubeconfig') // replace with your credential ID
